@@ -395,6 +395,22 @@ hr
     transform: translateY(-6px); /* Légère élévation du livre au survol */
 }
 
+.book-cover {
+    height: 200px; /* Hauteur fixe pour la couverture */
+    overflow: hidden; /* Cache tout débordement de l'image */
+    display: flex; /* Utilise Flexbox */
+    align-items: center; /* Centre verticalement l'image */
+    justify-content: center; /* Centre horizontalement l'image */
+}
+
+.book-cover img {
+    max-width: 100%; /* Largeur maximale de l'image */
+    max-height: 100%; /* Hauteur maximale de l'image */
+    object-fit: cover; /* Ajuste l'image pour couvrir tout l'espace disponible */
+}
+
+
+
 .book img {
     width: 100%; /* Les images prennent toute la largeur disponible */
     height: auto; /* Hauteur auto pour conserver les proportions */

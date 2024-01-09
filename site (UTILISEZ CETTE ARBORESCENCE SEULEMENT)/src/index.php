@@ -73,6 +73,7 @@ else {
                         <p class="text-style">Partagez votre expérience de lecteur. Apportez votre pierre à l'édifice en libérant votre expression et en exprimant votre opinion sur divers livres.</p>
                     </div>
                 </div>
+<<<<<<< Updated upstream
             </div>
             <h2 class="section-title">Derniers ajouts</h2>
             <hr>
@@ -98,6 +99,45 @@ else {
                 <br>
                 <p class="text-style">Ici, chaque livre est une expérience partagée.</p>
             </div>
+=======
+                <h2 class="section-title">Derniers ajouts</h2>
+                <hr>
+                <div class="book-section">
+                        <?php
+                        $lastAddedBooks = $db->getLastAddedBooks(); // Récupère les 5 derniers livres ajoutés
+
+                            foreach($lastAddedBooks as $book)
+                            {
+                            // Assure-toi que le chemin de l'image est correct et existe
+                            $coverImagePath = "./" . $book['booCoverImage']; // Modifie le chemin si nécessaire
+
+                            echo "<div class=\"book\">";
+                            echo "<div class=\"book-cover\">";
+                            if (file_exists($coverImagePath)) {
+                                echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"Couverture du livre\">";
+                            } else {
+                                echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">"; // Chemin vers une image de couverture par défaut
+                            }
+                            echo "</div>";
+                            echo "<div class=\"book-title\">";
+                            echo htmlspecialchars($book['booTitle']);
+                            echo "</div>";
+                            // Ajoute d'autres détails du livre ici si nécessaire
+                            echo "</div>";
+                            }
+                        ?>
+                </div>
+                <hr>
+                <div class="exchange-section">
+                    <h2 class="section-title">Échangez</h2>
+                    <br>
+                    <p class="text-style">Échangez, débattez avec d'autres passionnés et passionnées. La raison d'être de ce site est l'échange d'opinions diverses offrant aux lecteurs votre perspective.</p>
+                </div>
+                <div class="footer-section">
+                    <br>
+                    <p class="text-style">Ici, chaque livre est une expérience partagée.</p>
+                </div>
+>>>>>>> Stashed changes
         </main>
         <!--(contenu unique à cette page) --> 
         <footer>

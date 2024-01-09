@@ -52,6 +52,7 @@ if (isset($_SESSION['user'])) {
                     ?>
                 </ul>
             </nav>
+<<<<<<< Updated upstream
             <h2 class="section-title">Catégorie :</h2>
             <?php
                 // bookCategory.php
@@ -69,11 +70,51 @@ if (isset($_SESSION['user'])) {
                 {
                     echo "Aucune catégorie sélectionnée.";
                     exit;
-                }
+=======
+            <?php
+            if (isset($_GET['cat_id'])) {
+            $categoryId = $_GET['cat_id'];
+            // Obtenez le nom de la catégorie
+            $categoryName = $db->getCategoryName($categoryId);
 
-                // Afficher le nom de la catégorie
-                echo "<h2>Catégorie : $categoryName</h2>";
+            // Obtenez les livres de cette catégorie
+            $books = $db->getBooksByCategory($categoryId);
+            } else {
+                echo "Aucune catégorie sélectionnée.";
+                exit;
+            }
+
+            // Afficher le nom de la catégorie
+            echo "<h2 class=\"section-title\">Catégorie : " . htmlspecialchars($categoryName) . "</h2>";
+            echo "<br>";
+            ?>            
+            <div class="book-section">
+            <?php
+            // Afficher les livres
+            foreach ($books as $book) {
+                // Assure-toi que le chemin de l'image est correct et existe
+                $coverImagePath = "./" . $book['booCoverImage']; // Modifie le chemin si nécessaire
+
+                // Récupère le pseudo de l'utilisateur
+                $userPseudo = $db->getUsernameByUserId($book['user_fk']);
+
+                echo "<div class=\"book\">";
+                echo "<div class=\"book-cover\">";
+                echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>";
+                if (file_exists($coverImagePath)) {
+                    echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"Couverture du livre\">";
+                } else {
+                    echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">";
+>>>>>>> Stashed changes
+                }
+                echo "</a>";
+                echo "</div>";
+                echo "<div class=\"book-title\">";
+                // Lien pour voir les détails de l'ouvrage
+                echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>" . htmlspecialchars($book['booTitle']) . "</a>";
+                echo "</div>";
                 echo "<br>";
+<<<<<<< Updated upstream
 
                 // Afficher les livres
                 foreach ($books as $book) 
@@ -86,6 +127,22 @@ if (isset($_SESSION['user'])) {
                 }  
             ?>
         </main>
+=======
+                echo "Auteur : " . htmlspecialchars($book['booEditorName']);
+                echo "<br>";
+                // Lien pour voir les détails de l'utilisateur
+                if ($userPseudo) {
+                    echo "Utilisateur : <a href='userDetails.php?user_id=" . htmlspecialchars($book['user_fk']) . "'>" . htmlspecialchars($userPseudo) . "</a>";
+                } else {
+                    echo "Utilisateur : Inconnu";
+                }
+                echo "<br>";
+                echo "</div>";
+            }
+            ?>
+            </div>
+            </main>
+>>>>>>> Stashed changes
         <footer>
             <img src="../src/resources/img/books.png" alt="books" class="item-1">
             <p class="item-2"><a href="mailto:readersrealm@gmail.com">readersrealm@gmail.com</a><br> Théo Ghaemmagami | Yann Mangiagli | Leonar Sadriu | Harun Findik</p> 

@@ -40,24 +40,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         var_dump($_SESSION['user']);
         echo '<br>';
 
-        $bookData = [
-            'category_fk' => $_POST['bookCategory'],
-            'booWriter' => $_POST['writerFullName'], // A MODIFIER 
-            'user_fk' => $_SESSION['user']['user_id'], // A MODIFIER 
-            'booTitle' => $_POST['bookName'],
-            'booExemplary' => 1, // A MODIFIER 
-            'booResumeBook' => $_POST['bookSynopsis'],
-            'booNbrPage' => $_POST['pageNbr'],
-            'booEditorName' => $_POST['editorName'],
-            'booLikeRatio' => 0, // A MODIFIER 
-            'booEditionDate' => $_POST['releaseDate'], 
-        ];
-
         if ($_FILES['coverImage']['error'] === 0) {
             $uploadDir = 'uploads/';
-            $fileName = basename($_FILES['coverImage']['name']);
+            $uniqueId = uniqid(); // Génère un ID unique
+            $fileName = $uniqueId . '-' . basename($_FILES['coverImage']['name']);
             $uploadPath = $uploadDir . $fileName;
-
+        
             if (move_uploaded_file($_FILES['coverImage']['tmp_name'], $uploadPath)) {
                 echo 'Le fichier a été téléchargé avec succès.';
                 $bookData['booCoverImage'] = $uploadPath;
@@ -69,6 +57,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo 'Erreur lors du téléchargement de l\'image : ' . $_FILES['coverImage']['error'];
             exit();
         }
+
+        // Préparation du tableau de données pour l'ajout du livre
+        $bookData = [
+            'category_fk' => $_POST['bookCategory'],
+            'booWriter' => $_POST['writerFullName'], 
+            'user_fk' => $_SESSION['user']['user_id'], 
+            'booTitle' => $_POST['bookName'],
+            'booExemplary' => 1, 
+            'booResumeBook' => $_POST['bookSynopsis'],
+            'booNbrPage' => $_POST['pageNbr'],
+            'booEditorName' => $_POST['editorName'],
+            'booLikeRatio' => 0,  
+            'booEditionDate' => $_POST['releaseDate'], 
+            'booCoverImage' => $uploadPath, 
+        ];
 
         try {
             $db->addBook($bookData);

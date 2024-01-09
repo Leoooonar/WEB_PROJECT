@@ -186,7 +186,7 @@ class Database {
     */
 
     public function getBooksByCategory($categoryId) {
-        $query = "SELECT booTitle, booResumeBook FROM t_book WHERE category_fk = :categoryId";
+        $query = "SELECT book_id, booTitle, booCoverImage, booEditorName, user_fk FROM t_book WHERE category_fk = :categoryId";
         $stmt = $this->connector->prepare($query);
         $stmt->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
         $stmt->execute();
@@ -194,6 +194,15 @@ class Database {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
+    //Nom à partir de user_fk
+    public function getUsernameByUserId($userId) {
+        $query = "SELECT useUsername FROM t_user WHERE user_id = :userId";
+        $stmt = $this->connector->prepare($query);
+        $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result ? $result['useUsername'] : null;
+    }
 
 /*
     // Méthode pour récupérer le nom de la catégory grâce à l'id 
@@ -273,18 +282,11 @@ class Database {
         return $categories;
     }
 
-    public function getLastAddedBooks($limit = 5)
-    {
-        // avoir la requête sql pour récupérer toutes les sections
-        $query = "SELECT * FROM t_book ORDER BY book_id DESC LIMIT 5";
-       
-        // appeler la méthode pour exécuter la requête
-        $req = $this->querySimpleExecute($query);
- 
-        // appeler la méthode pour avoir le résultat sous forme de tableau
-        $lastAddedBooks = $this->formatData($req);
- 
-        // retourne toutes les sections
-        return $lastAddedBooks;
+    public function getLastAddedBooks($limit = 5) {
+        $query = "SELECT * FROM t_book ORDER BY book_id DESC LIMIT :limit";
+        $stmt = $this->connector->prepare($query);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 }
