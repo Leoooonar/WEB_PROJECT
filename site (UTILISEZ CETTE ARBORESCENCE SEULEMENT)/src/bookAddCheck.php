@@ -3,6 +3,7 @@ session_start();
 
 include("./database.php");
 $db = new Database();
+var_dump($_SESSION);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
@@ -41,16 +42,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $bookData = [
             'category_fk' => $_POST['bookCategory'],
-            'writer_fk' => NULL, // A MODIFIER 
-            'user_fk' => NULL, // A MODIFIER 
+            'booWriter' => $_POST['writerFullName'], // A MODIFIER 
+            'user_fk' => $_SESSION['user']['user_id'], // A MODIFIER 
             'booTitle' => $_POST['bookName'],
             'booExemplary' => 1, // A MODIFIER 
             'booResumeBook' => $_POST['bookSynopsis'],
             'booNbrPage' => $_POST['pageNbr'],
             'booEditorName' => $_POST['editorName'],
             'booLikeRatio' => 0, // A MODIFIER 
-            'writerLastName' => $_POST['writerLastName'], 
-            'writerFirstName' => $_POST['writerFirstName'],
             'booEditionDate' => $_POST['releaseDate'], 
         ];
 

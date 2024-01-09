@@ -1,5 +1,9 @@
 <?php
 session_start();
+
+// Récupère les derniers livres ajoutés
+$lastAddedBooks = $db->getLastAddedBooks();
+
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
@@ -7,10 +11,12 @@ if (isset($_SESSION['user'])) {
     echo 'Bienvenue, ' . $user['useUsername'] . '!';
     var_dump($user);
     // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
-} else {
+} 
+else {
     // L'utilisateur n'est pas connecté, affichez un message approprié
     echo 'Veuillez vous connecter pour accéder à cette page.';
     // Afficher un lien de connexion ici si nécessaire
+   
 }
 ?>
 
@@ -67,25 +73,16 @@ if (isset($_SESSION['user'])) {
                 <hr>
                 <div class="book-section">
                     <div class="book">
-                        <img src="./resources/img/couverture-livre1.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
+                        <?php
+                            foreach($lastAddedBooks as $book)
+                            {
+                                echo "<div class=\"book-title\">";
+                                echo $book['booTitle'];
+                                echo "</div>";
+                            }
+                        ?>
                     </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre2.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre3.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre4.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre5.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                    </div>
+                    
                 </div>
                 <hr>
                 <div class="exchange-section">

@@ -93,8 +93,7 @@ if (isset($_SESSION['user'])) {
                         </div>
                         <div class="flexbox" id="flexbox-item-1">
                             <label for="txtWriterFullName">NOM ET PRENOM DE L'AUTEUR<br></label>
-                            <input type="text" id="writerLastName" name="writerLastName" value="Nom">
-                            <input type="text" id="writerFirstName" name="writerFirstName" value="Prénom">
+                            <input type="text" id="writerFullName" name="writerFullName">
                             <br><br>
                             <label for="editorName">NOM DE L'EDITEUR<br></label>
                             <input type="text" id="editorName" name="editorName">

@@ -79,7 +79,6 @@ class Database {
     return; 
     }
 
-
     public function loginUser($username, $password) {
         $query = "SELECT * FROM t_user WHERE useUsername = :username";
     
@@ -119,12 +118,12 @@ class Database {
     }
     
     public function addBook($data){
-        $query = "INSERT INTO t_book (category_fk, writer_fk, user_fk, booTitle, booExemplary, booResumeBook, booEditionDate, booNbrPage, booEditorName, booLikeRatio, booCoverImage) 
-                  VALUES (:category_fk, :writer_fk, :user_fk, :booTitle, :booExemplary, :booResumeBook, :booEditionDate, :booNbrPage, :booEditorName, :booLikeRatio, :booCoverImage)";
+        $query = "INSERT INTO t_book (category_fk, booWriter, user_fk, booTitle, booExemplary, booResumeBook, booEditionDate, booNbrPage, booEditorName, booLikeRatio, booCoverImage) 
+                  VALUES (:category_fk, :booWriter, :user_fk, :booTitle, :booExemplary, :booResumeBook, :booEditionDate, :booNbrPage, :booEditorName, :booLikeRatio, :booCoverImage)";
     
         $binds = [
             'category_fk' => $data['category_fk'],
-            'writer_fk' => $data['writer_fk'],
+            'booWriter' => $data['booWriter'],
             'user_fk' => $data['user_fk'],
             'booTitle' => $data['booTitle'],
             'booExemplary' => $data['booExemplary'],
@@ -237,7 +236,7 @@ class Database {
         booLikeRatio, booCoverImage, wriFirstname, wriLastname, catCategory,useUsername, ratRate
 
         FROM t_book AS B JOIN t_user AS U ON B.user_fk = U.user_id
-        JOIN t_writer AS W ON B.writer_fk = W.writer_id09
+        JOIN t_writer AS W ON B.booWriter = W.writer_id09
         JOIN t_category AS C ON B.category_fk = C.category_id
         JOIN t_rate AS R ON R.book_fk = B.book_id;
         ";
@@ -254,7 +253,7 @@ class Database {
         booLikeRatio, booCoverImage, wriFirstname, wriLastname, catCategory,useUsername, ratRate
 
         FROM t_book AS B JOIN t_user AS U ON B.user_fk = U.user_id
-        JOIN t_writer AS W ON B.writer_fk = W.writer_id09
+        JOIN t_writer AS W ON B.booWriter = W.writer_id09
         JOIN t_category AS C ON B.category_fk = C.category_id
         JOIN t_rate AS R ON R.book_fk = B.book_id;"));          
     }
@@ -272,5 +271,20 @@ class Database {
  
         // retourne toutes les sections
         return $categories;
+    }
+
+    public function getLastAddedBooks($limit = 5)
+    {
+        // avoir la requête sql pour récupérer toutes les sections
+        $query = "SELECT * FROM t_book ORDER BY book_id DESC LIMIT 5";
+       
+        // appeler la méthode pour exécuter la requête
+        $req = $this->querySimpleExecute($query);
+ 
+        // appeler la méthode pour avoir le résultat sous forme de tableau
+        $lastAddedBooks = $this->formatData($req);
+ 
+        // retourne toutes les sections
+        return $lastAddedBooks;
     }
 }
