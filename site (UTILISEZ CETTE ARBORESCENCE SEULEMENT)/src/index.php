@@ -1,5 +1,7 @@
 <?php
 session_start();
+include("./database.php");
+$db = new Database();
 
 // Récupère les derniers livres ajoutés
 $lastAddedBooks = $db->getLastAddedBooks();
