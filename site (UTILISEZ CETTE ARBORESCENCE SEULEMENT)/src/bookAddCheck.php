@@ -24,6 +24,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             echo '<p>' . $error . '</p>';
         }
     } else {
+
+        // Mise à jour du nombre de livres proposés par l'utilisateur
+        $newCount = $db->incrementUserNbrProposedBooks($_SESSION['user']['user_id']);
+
+        // Mettez à jour la valeur dans la variable $user avec la nouvelle valeur
+        $_SESSION['user']['useNbrProposedBook'] = $newCount;
+
+        echo '<br>';
+        var_dump($newCount);
+        echo '<br>';
+
+        echo '<br>';
+        var_dump($_SESSION['user']);
+        echo '<br>';
+
         $bookData = [
             'category_fk' => $_POST['bookCategory'],
             'writer_fk' => NULL, // A MODIFIER 

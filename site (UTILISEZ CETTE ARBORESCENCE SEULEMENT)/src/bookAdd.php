@@ -56,6 +56,11 @@ if (isset($_SESSION['user'])) {
             <div class="flexboxContainerAddBook">
                 <form action="bookAddCheck.php" method="post" class="myForm" enctype="multipart/form-data">
                     <div class="flexbox" id="flexbox-item-1">    
+                            <?php
+                                if (isset($_SESSION['user'])) {
+                                    echo '<input type="hidden" name="userID" value="' . $user['user_id'] . '">';
+                                }
+                            ?>
                             <label for="txtBookName">TITRE DU LIVRE<br></label>
                             <input type="text" id="bookName" name="bookName"><br><br>
                             <label for="bookCategory">CATEGORIE<br></label>

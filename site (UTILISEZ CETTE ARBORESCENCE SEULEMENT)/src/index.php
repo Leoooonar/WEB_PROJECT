@@ -5,6 +5,7 @@ if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
     // Affichez les informations de l'utilisateur, par exemple, son nom d'utilisateur
     echo 'Bienvenue, ' . $user['useUsername'] . '!';
+    var_dump($user);
     // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
 } else {
     // L'utilisateur n'est pas connecté, affichez un message approprié
@@ -37,7 +38,7 @@ if (isset($_SESSION['user'])) {
                 echo '<div class="dropdown-content">';
                 echo '<a href="userDetails.php">Détail du compte</a>';
                 echo '<a href="userBooks.php">Mes livres</a>';
-                echo '<a href="bookAdd.php">Ajouter un livre</a>';
+                echo '<a href="bookAdd.php?user_id=' . $user['user_id'] . '">Ajouter un livre</a>';
                 echo '<a href="logout.php">Déconnexion</a>';
                 echo '</div>';
                 echo '</li>';

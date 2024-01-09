@@ -50,8 +50,15 @@ if (isset($_SESSION['user'])) {
                 <div class="user-info-section">
                     <h2 class="username">Nom de l'utilisateur : <span class="highlight"><?php echo $user['useUsername']; ?></span></h2>
                     <br>
-                    <p class="user-stats">Nombre d'ouvrages proposés : <span class="highlight"></span></p>
+                    <p class="user-stats">Nombre d'ouvrages proposés : <span class="highlight"><?php echo $user['useNbrProposedBook']; ?></span></p>
+                    <br>
+                    <?php 
+                    $deleteLink = "javascript:confirmDelete('" . $user["user_id"] . "')";
+                    echo '<a href="' . $deleteLink . '">Supprimer le compte</a>';
+                    ?>
                 </div>
+
+
         </main>
     <footer>
         <img src="../src/resources/img/books.png" alt="books" class="item-1">

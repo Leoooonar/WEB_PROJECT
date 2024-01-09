@@ -106,9 +106,21 @@ class Database {
         }
     }
 
+    public function deleteUser($userId) {
+        $query = "DELETE FROM t_user WHERE user_id = :userId";
+    
+        try {
+            $stmt = $this->connector->prepare($query);
+            $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+            $stmt->execute();
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la suppression du compte : " . $e->getMessage());
+        }
+    }
+    
     public function addBook($data){
-        $query = "INSERT INTO t_book (category_fk, writer_fk, user_fk, booTitle, booExemplary, booResumeBook, booNbrPage, booEditorName, booLikeRatio, booCoverImage) 
-                  VALUES (:category_fk, :writer_fk, :user_fk, :booTitle, :booExemplary, :booResumeBook, :booNbrPage, :booEditorName, :booLikeRatio, :booCoverImage)";
+        $query = "INSERT INTO t_book (category_fk, writer_fk, user_fk, booTitle, booExemplary, booResumeBook, booEditionDate, booNbrPage, booEditorName, booLikeRatio, booCoverImage) 
+                  VALUES (:category_fk, :writer_fk, :user_fk, :booTitle, :booExemplary, :booResumeBook, :booEditionDate, :booNbrPage, :booEditorName, :booLikeRatio, :booCoverImage)";
     
         $binds = [
             'category_fk' => $data['category_fk'],
@@ -121,6 +133,7 @@ class Database {
             'booEditorName' => $data['booEditorName'],
             'booLikeRatio' => $data['booLikeRatio'],
             'booCoverImage' => $data['booCoverImage'],
+            'booEditionDate' => $_POST['releaseDate'], 
         ];
     
         try {
@@ -130,6 +143,41 @@ class Database {
         } catch (Exception $e) {
             // Gérer l'exception
             die('Erreur lors de l\'ajout du livre : ' . $e->getMessage());
+        }
+    }
+
+    public function incrementUserNbrProposedBooks($user_id) {
+        $query = "UPDATE t_user SET UseNbrProposedBook = UseNbrProposedBook + 1 WHERE user_id = :user_id";
+        
+        try {
+            $stmt = $this->connector->prepare($query);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            
+            // Récupérez la nouvelle valeur du nombre d'ouvrages proposés après la mise à jour
+            $newCount = $this->getUserNbrProposedBooks($user_id);
+            
+            return $newCount; // Retourne la nouvelle valeur du nombre d'ouvrages proposés
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la mise à jour du nombre de livres proposés par l'utilisateur : " . $e->getMessage());
+        }
+    }
+
+    public function getUserNbrProposedBooks($user_id) {
+        $query = "SELECT UseNbrProposedBook FROM t_user WHERE user_id = :user_id";
+        
+        try {
+            $stmt = $this->connector->prepare($query);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return $result['UseNbrProposedBook'];
+            } else {
+                return 0; // Retourne 0 si l'utilisateur n'est pas trouvé
+            }
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la récupération du nombre d'ouvrages proposés par l'utilisateur : " . $e->getMessage());
         }
     }
 
