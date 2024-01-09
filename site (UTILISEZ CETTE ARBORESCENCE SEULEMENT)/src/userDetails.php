@@ -57,8 +57,7 @@ if (isset($_SESSION['user'])) {
                     echo '<a href="' . $deleteLink . '">Supprimer le compte</a>';
                     ?>
                 </div>
-
-
+            <script src="js/script.js"></script>
         </main>
     <footer>
         <img src="../src/resources/img/books.png" alt="books" class="item-1">
