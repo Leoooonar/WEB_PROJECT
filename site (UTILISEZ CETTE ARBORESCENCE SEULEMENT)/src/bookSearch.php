@@ -66,7 +66,7 @@ if (isset($_SESSION['user'])) {
             </main>
         <footer>
             <img src="../src/resources/img/books.png" alt="books" class="item-1">
-            <p class="item-2">readersrealm@gmail.com <br> Théo Ghaemmagami | Yann Mangiagli | Leonar Sadriu | Harun Findik</p> 
+            <p class="item-2"><a href="mailto:readersrealm@gmail.com">readersrealm@gmail.com</a><br> Théo Ghaemmagami | Yann Mangiagli | Leonar Sadriu | Harun Findik</p> 
             <img src="../src/resources/img/books.png" alt="books" class="item-1">
         </footer>
     </body>
