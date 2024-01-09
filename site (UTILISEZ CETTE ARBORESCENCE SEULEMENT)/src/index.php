@@ -73,33 +73,6 @@ else {
                         <p class="text-style">Partagez votre expérience de lecteur. Apportez votre pierre à l'édifice en libérant votre expression et en exprimant votre opinion sur divers livres.</p>
                     </div>
                 </div>
-<<<<<<< Updated upstream
-            </div>
-            <h2 class="section-title">Derniers ajouts</h2>
-            <hr>
-            <div class="book-section">
-                <div class="book">
-                    <?php
-                        foreach($lastAddedBooks as $book)
-                        {
-                            echo "<div class=\"book-title\">";
-                            echo $book['booTitle'];
-                            echo "</div>";
-                        }
-                    ?>
-                </div>      
-            </div>
-            <hr>
-            <div class="exchange-section">
-                <h2 class="section-title">Échangez</h2>
-                <br>
-                <p class="text-style">Échangez, débattez avec d'autres passionnés et passionnées. La raison d'être de ce site est l'échange d'opinions diverses offrant aux lecteurs votre perspective.</p>
-            </div>
-            <div class="footer-section">
-                <br>
-                <p class="text-style">Ici, chaque livre est une expérience partagée.</p>
-            </div>
-=======
                 <h2 class="section-title">Derniers ajouts</h2>
                 <hr>
                 <div class="book-section">
@@ -137,7 +110,6 @@ else {
                     <br>
                     <p class="text-style">Ici, chaque livre est une expérience partagée.</p>
                 </div>
->>>>>>> Stashed changes
         </main>
         <!--(contenu unique à cette page) --> 
         <footer>

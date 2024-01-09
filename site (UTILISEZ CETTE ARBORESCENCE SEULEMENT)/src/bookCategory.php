@@ -52,25 +52,6 @@ if (isset($_SESSION['user'])) {
                     ?>
                 </ul>
             </nav>
-<<<<<<< Updated upstream
-            <h2 class="section-title">Catégorie :</h2>
-            <?php
-                // bookCategory.php
-                if (isset($_GET['cat_id'])) 
-                {
-                    $categoryId = $_GET['cat_id'];
-                        
-                    // Obtenez le nom de la catégorie
-                    $categoryName = $db->getCategoryName($categoryId);
-
-                    // Obtenez les livres de cette catégorie
-                    $books = $db->getBooksByCategory($categoryId);
-                } 
-                else 
-                {
-                    echo "Aucune catégorie sélectionnée.";
-                    exit;
-=======
             <?php
             if (isset($_GET['cat_id'])) {
             $categoryId = $_GET['cat_id'];
@@ -105,7 +86,6 @@ if (isset($_SESSION['user'])) {
                     echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"Couverture du livre\">";
                 } else {
                     echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">";
->>>>>>> Stashed changes
                 }
                 echo "</a>";
                 echo "</div>";
@@ -114,20 +94,6 @@ if (isset($_SESSION['user'])) {
                 echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>" . htmlspecialchars($book['booTitle']) . "</a>";
                 echo "</div>";
                 echo "<br>";
-<<<<<<< Updated upstream
-
-                // Afficher les livres
-                foreach ($books as $book) 
-                {
-                    echo "<p>Titre :".$book['booTitle']."</p>"; // Utilisation de 'booTitle' pour accéder au titre du livre
-                    echo "<br>";
-                    echo "<p>Résumé : " . htmlspecialchars($book['booResumeBook']) . "</p>";// Utilisation de 'booTitle' pour accéder au titre du livre
-                    echo "<br>";
-                    echo "<br>";
-                }  
-            ?>
-        </main>
-=======
                 echo "Auteur : " . htmlspecialchars($book['booEditorName']);
                 echo "<br>";
                 // Lien pour voir les détails de l'utilisateur
@@ -142,7 +108,6 @@ if (isset($_SESSION['user'])) {
             ?>
             </div>
             </main>
->>>>>>> Stashed changes
         <footer>
             <img src="../src/resources/img/books.png" alt="books" class="item-1">
             <p class="item-2"><a href="mailto:readersrealm@gmail.com">readersrealm@gmail.com</a><br> Théo Ghaemmagami | Yann Mangiagli | Leonar Sadriu | Harun Findik</p> 
