@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         }
 
-        // Préparation du tableau de données pour l'ajout du livre
+        // Préparation du tableau associatif de données pour l'ajout du livre
         $bookData = [
             'category_fk' => $_POST['bookCategory'],
             'booWriter' => $_POST['writerFullName'], 
@@ -73,6 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'booCoverImage' => $uploadPath, 
         ];
 
+        // Permet d'avertir l'utilisateur si une erreur est survenue
         try {
             $db->addBook($bookData);
         } catch (Exception $e) {

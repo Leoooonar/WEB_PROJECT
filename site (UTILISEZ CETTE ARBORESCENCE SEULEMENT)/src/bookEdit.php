@@ -57,7 +57,7 @@ if (!$book || $book['user_fk'] != $_SESSION['user']['user_id']) {
                     ?>
                 </ul>
             </nav>
-            <!--(contenu unique à cette page) -->
+            <!--Contenu dynamique -->
             <br><br>
             <h1 id="bookTitle">Quel livre<br>souhaitez-vous ajouter ?
             </h1>
@@ -78,7 +78,8 @@ if (!$book || $book['user_fk'] != $_SESSION['user']['user_id']) {
                     <input type="text" id="bookName" name="bookName" value="<?php echo htmlspecialchars($book['booTitle'] ?? ''); ?>"><br><br>
                     <label for="bookCategory">CATEGORIE<br></label>
                     <select id="bookCategory" name="bookCategory">
-                        <?php 
+                        <?php
+                        // Création des catégories possible des livres 
                             $categories = [
                                 ['category_id' => 1, 'catCategory' => 'Horreur'],
                                 ['category_id' => 2, 'catCategory' => 'Comédie'],
@@ -94,6 +95,7 @@ if (!$book || $book['user_fk'] != $_SESSION['user']['user_id']) {
                             }
                         ?>
                     </select><br><br>
+                    <!-- Formulaire de création du livre -->
                     <label for="quantity">NOMBRE DE PAGE<br></label>
                     <input type="number" id="pageNbr" name="pageNbr" min="1" max="9999" value="<?php echo htmlspecialchars($book['booNbrPage'] ?? ''); ?>">
                     <br><br>
@@ -113,6 +115,8 @@ if (!$book || $book['user_fk'] != $_SESSION['user']['user_id']) {
                     <br><br>
                     <label for="releaseDate">ANNEE D'EDITION<br></label>
                     <?php
+
+                    // Enregistre la date entrée dans le formulaire si elle correspond au format
                     $dateValue = isset($book['booEditionDate']) ? date('Y-m-d', strtotime($book['booEditionDate'])) : '';
                     ?>
                     <input type="date" id="releaseDate" name="releaseDate" value="<?php echo htmlspecialchars($dateValue); ?>">

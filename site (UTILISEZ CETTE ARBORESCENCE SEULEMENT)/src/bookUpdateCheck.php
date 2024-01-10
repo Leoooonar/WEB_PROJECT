@@ -18,20 +18,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['book_id'])) {
         $errors[] = 'La catégorie du livre est obligatoire.';
     }
 
-    // Ajoutez d'autres validations au besoin...
-
+    //Compte le nombre d'erreurs
     if (count($errors) > 0) {
         foreach ($errors as $error) {
             echo '<p>' . $error . '</p>';
         }
     } else {
 
+        // Télécharge l'image de couverture du livre proposé si elle est changée
         if ($_FILES['coverImage']['error'] === 0) {
             $uploadDir = 'uploads/';
             $uniqueId = uniqid(); // Génère un ID unique
             $fileName = $uniqueId . '-' . basename($_FILES['coverImage']['name']);
             $uploadPath = $uploadDir . $fileName;
         
+            // Gère les fichiers qui se déplacent dans le serveur
             if (move_uploaded_file($_FILES['coverImage']['tmp_name'], $uploadPath)) {
                 echo 'Le fichier a été téléchargé avec succès.';
                 $bookData['booCoverImage'] = $uploadPath;

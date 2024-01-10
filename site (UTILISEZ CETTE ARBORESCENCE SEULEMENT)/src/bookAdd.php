@@ -22,6 +22,7 @@ if (isset($_SESSION['user'])) {
     </head>
     <body>
         <main>
+            <!--Barre de navigation commune à toutes les pages-->
             <nav class="navbar">
                 <ul>
                     <li class="nav-item-one"><a href="index.php">Accueil</a></li>

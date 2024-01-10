@@ -31,7 +31,7 @@ if (isset($_SESSION['user'])) {
                     <?php
                         if (isset($_SESSION['user'])) 
                         {
-                            // Utilisateur connecté
+                            // Interface si Utilisateur connecté
                             echo '<li class="nav-item-two"><a href="bookAdd.php">Ajouter</a></li>';
                             echo '<li class="nav-item dropdown">';
                             echo '<a href="javascript:void(0)" class="dropbtn">Mon compte</a>';
@@ -44,7 +44,7 @@ if (isset($_SESSION['user'])) {
                         } 
                         else 
                         {
-                            // Utilisateur non connecté
+                            // Interface si Utilisateur non connecté
                             echo '<li class="nav-item-two"><a href="userLogin.php">Ajouter</a></li>';
                             echo '<li class="nav-item"><a href="userLogin.php">Connexion</a></li>';
                         }

@@ -77,11 +77,15 @@ if (isset($_SESSION['user'])) {
                             echo "<div class=\"book\">";
                             echo "<div class=\"book-cover\">";
                             echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>";
+
+                            // Ajoute le chemin de l'image de la couverture du livre si elle est donnée, sinon met un placeholder
                             if (file_exists($coverImagePath)) {
                                 echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"Couverture du livre\">";
                             } else {
                                 echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">";
                             }
+
+                            // vérifie l'id du livre et de l'utilisateur
                             echo "</a>";
                             echo "</div>";
                             echo "<div class=\"book-title\">";

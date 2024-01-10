@@ -299,15 +299,7 @@ class Database {
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['catCategory'] : null;
     }
-    
-/*
-    // Méthode pour supprimer un livre. Méthode faite avec un prepare pour éviter les injections sql.
-    public function deleteTeacher($book_id){
-        $req = $this->connector->prepare("DELETE FROM t_book WHERE book_id = :book_id");
-        $req->bindValue(':idTeacher', $book_id, PDO::PARAM_STR);
-        $req->execute();
-    }
-    */
+
     public function addWriter($data){
 
         $query = "INSERT INTO t_writer (wriFirstname, wriLastname) 
@@ -319,7 +311,8 @@ class Database {
         ];
         $req = $this->queryPrepareExecute($query, $binds);
     }
-
+    
+    // Permet de retourner tous les livres de la base de donnée
     public function getAllBooks() {
 
         $query = "SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditorName, booEditionBook, 
@@ -337,7 +330,7 @@ class Database {
         // Traitement, transformer le résultat en tableau associatif
         return $this->formatData($req);
     }
-
+    // Permet de rechercher un livre précis
     public function getOneBook($id) {
         return $this->formatData($this->querySimpleExecute("SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditorName, booEditionBook, 
         booLikeRatio, booCoverImage, wriFirstname, wriLastname, catCategory,useUsername, ratRate
@@ -348,6 +341,7 @@ class Database {
         JOIN t_rate AS R ON R.book_fk = B.book_id;"));          
     }
 
+    //Retourne toutes les catégories
     public function getAllCategories()
     {
         // avoir la requête sql pour récupérer toutes les sections
@@ -363,6 +357,7 @@ class Database {
         return $categories;
     }
 
+    // Va afficher
     public function getLastAddedBooks($limit = 5) {
         $query = "SELECT * FROM t_book ORDER BY book_id DESC LIMIT :limit";
         $stmt = $this->connector->prepare($query);
