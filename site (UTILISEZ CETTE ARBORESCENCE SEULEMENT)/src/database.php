@@ -105,6 +105,7 @@ class Database {
         }
     }
 
+    //Supprime un utilisateur de la db
     public function deleteUser($userId) {
         $query = "DELETE FROM t_user WHERE user_id = :userId";
     
@@ -117,6 +118,24 @@ class Database {
         }
     }
     
+    //Supprime un livre de la db
+    public function deleteBook($bookId) {
+        $query = "DELETE FROM t_book WHERE book_id = :bookId";
+        $stmt = $this->connector->prepare($query);
+        $stmt->bindValue(':bookId', $bookId, PDO::PARAM_INT);
+        $stmt->execute();
+    }
+
+    // Méthode pour obtenir les détails d'un livre
+    public function getBookById($bookId) {
+        $query = "SELECT * FROM t_book WHERE book_id = :bookId";
+        $stmt = $this->connector->prepare($query);
+        $stmt->bindValue(':bookId', $bookId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    //Ajoute un livre dans la DB
     public function addBook($data){
         $query = "INSERT INTO t_book (category_fk, booWriter, user_fk, booTitle, booExemplary, booResumeBook, booEditionDate, booNbrPage, booEditorName, booLikeRatio, booCoverImage) 
                   VALUES (:category_fk, :booWriter, :user_fk, :booTitle, :booExemplary, :booResumeBook, :booEditionDate, :booNbrPage, :booEditorName, :booLikeRatio, :booCoverImage)";
@@ -145,6 +164,45 @@ class Database {
         }
     }
 
+    //MAJ du livre si edit
+    public function updateBook($bookId, $bookData) {
+        $query = "UPDATE t_book SET 
+            booTitle = :booTitle, 
+            category_fk = :category_fk, 
+            booWriter = :booWriter, 
+            booExemplary = :booExemplary, 
+            booResumeBook = :booResumeBook, 
+            booNbrPage = :booNbrPage, 
+            booEditorName = :booEditorName, 
+            booEditionDate = :booEditionDate";
+    
+        //Vérifie si une nouvelle image de couverture a été téléchargée pour le livre
+        if (isset($bookData['booCoverImage'])) {
+            $query .= ", booCoverImage = :booCoverImage";
+        }
+    
+        $query .= " WHERE book_id = :bookId";
+    
+        $stmt = $this->connector->prepare($query);
+    
+        $stmt->bindValue(':booTitle', $bookData['booTitle']);
+        $stmt->bindValue(':category_fk', $bookData['category_fk']);
+        $stmt->bindValue(':booWriter', $bookData['booWriter']);
+        $stmt->bindValue(':booExemplary', $bookData['booExemplary']);
+        $stmt->bindValue(':booResumeBook', $bookData['booResumeBook']);
+        $stmt->bindValue(':booNbrPage', $bookData['booNbrPage']);
+        $stmt->bindValue(':booEditorName', $bookData['booEditorName']);
+        $stmt->bindValue(':booEditionDate', $bookData['booEditionDate']);
+        
+        if (isset($bookData['booCoverImage'])) {
+            $stmt->bindValue(':booCoverImage', $bookData['booCoverImage']);
+        }
+    
+        $stmt->bindValue(':bookId', $bookId, PDO::PARAM_INT);
+    
+        $stmt->execute();
+    }
+
     public function incrementUserNbrProposedBooks($user_id) {
         $query = "UPDATE t_user SET UseNbrProposedBook = UseNbrProposedBook + 1 WHERE user_id = :user_id";
         
@@ -160,6 +218,15 @@ class Database {
         } catch (PDOException $e) {
             throw new Exception("Erreur lors de la mise à jour du nombre de livres proposés par l'utilisateur : " . $e->getMessage());
         }
+    }
+
+    //Trouve les livres postés par l'utilisateur
+    public function getBooksByUserId($userId) {
+        $query = "SELECT * FROM t_book WHERE user_fk = :userId";
+        $stmt = $this->connector->prepare($query);
+        $stmt->bindValue(':userId', $userId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function getUserNbrProposedBooks($user_id) {
@@ -186,7 +253,7 @@ class Database {
     */
 
     public function getBooksByCategory($categoryId) {
-        $query = "SELECT book_id, booTitle, booCoverImage, booEditorName, user_fk FROM t_book WHERE category_fk = :categoryId";
+        $query = "SELECT book_id, booTitle, booCoverImage, booWriter, user_fk FROM t_book WHERE category_fk = :categoryId";
         $stmt = $this->connector->prepare($query);
         $stmt->bindValue(':categoryId', $categoryId, PDO::PARAM_INT);
         $stmt->execute();

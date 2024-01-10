@@ -94,7 +94,7 @@ if (isset($_SESSION['user'])) {
                 echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>" . htmlspecialchars($book['booTitle']) . "</a>";
                 echo "</div>";
                 echo "<br>";
-                echo "Auteur : " . htmlspecialchars($book['booEditorName']);
+                echo "Auteur : " . htmlspecialchars($book['booWriter']);
                 echo "<br>";
                 // Lien pour voir les détails de l'utilisateur
                 if ($userPseudo) {

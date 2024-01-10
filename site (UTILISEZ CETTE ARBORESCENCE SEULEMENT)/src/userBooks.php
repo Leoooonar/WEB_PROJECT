@@ -1,8 +1,12 @@
 <?php
 session_start();
+include("./database.php");
+$db = new Database();
+
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
+    $userBooks = $db->getBooksByUserId($user['user_id']);
     // Affichez les informations de l'utilisateur, par exemple, son nom d'utilisateur
     echo 'Bienvenue, ' . $user['useUsername'] . '!';
     // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
@@ -54,49 +58,35 @@ if (isset($_SESSION['user'])) {
             <hr>
             <div class="book-section">
                 <!-- Répétition de la structure pour chaque livre (contenu unique à cette page) -->
-                <div class="book">
-                    <img src="./resources/img/couverture-livre1.png" alt="Titre du livre">
-                    <div class="book-title">Titre du livre</div>
-                        <div class="book-actions">
-                            <button class="book-action">Modifier</button>
-                            <button class="book-action">Supprimer</button>
-                        </div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre2.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                        <div class="book-actions">
-                            <button class="book-action">Modifier</button>
-                            <button class="book-action">Supprimer</button>
-                        </div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre3.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                        <div class="book-actions">
-                            <button class="book-action">Modifier</button>
-                            <button class="book-action">Supprimer</button>
-                        </div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre4.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                        <div class="book-actions">
-                            <button class="book-action">Modifier</button>
-                            <button class="book-action">Supprimer</button>
-                        </div>
-                    </div>
-                    <div class="book">
-                        <img src="./resources/img/couverture-livre5.png" alt="Titre du livre">
-                        <div class="book-title">Titre du livre</div>
-                        <div class="book-actions">
-                            <button class="book-action">Modifier</button>
-                            <button class="book-action">Supprimer</button>
-                        </div>
-                    </div>
-                    <!-- Fin de la structure pour un livre -->
-                    </div>
-                </div>  
+                   <?php
+                   foreach ($userBooks as $book) {
+                    // Assure-toi que le chemin de l'image est correct et existe
+                    $coverImagePath = "./" . $book['booCoverImage']; // Modifie le chemin si nécessaire
+                
+                    echo "<div class=\"book\">";
+                    if (file_exists($coverImagePath)) {
+                        echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"" . htmlspecialchars($book['booTitle']) . "\">";
+                    } else {
+                        echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">"; // Chemin vers une image de couverture par défaut
+                    }
+                    echo "<div class=\"book-title\">" . htmlspecialchars($book['booTitle']) . "</div>";
+                    echo "<div class=\"book-actions\">";
+                    // Bouton Modifier - Redirige vers une page de modification avec l'ID du livre en paramètre
+                    echo "<button class=\"book-action\" onclick=\"location.href='bookEdit.php?book_id=" . htmlspecialchars($book['book_id']) . "'\">Modifier</button>";
+                    // Bouton Supprimer - Peut appeler une fonction JavaScript pour gérer la suppression
+                    echo "<button class=\"book-action\" onclick=\"confirmDelete('" . htmlspecialchars($book['book_id']) . "')\">Supprimer</button>";
+                    echo "</div>";
+                    echo "</div>";
+                }
+                // JavaScript pour la confirmation de suppression
+                echo "<script>
+                function confirmDelete(bookId) {
+                    if (confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')) {
+                        location.href = 'deleteBook.php?book_id=' + bookId;
+                    }
+                }
+                </script>";
+                   ?>
         </main>
         <footer>
             <img src="../src/resources/img/books.png" alt="books" class="item-1">

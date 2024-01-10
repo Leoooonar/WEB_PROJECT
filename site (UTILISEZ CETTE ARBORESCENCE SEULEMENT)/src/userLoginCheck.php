@@ -37,7 +37,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
         }
         else
         {
-            echo 'guezmer';
+            echo 'Raté';
         }
     }
 }
