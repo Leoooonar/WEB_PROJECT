@@ -18,7 +18,6 @@ class Database {
         try 
         {
             $this->connector = new PDO('mysql:host=localhost:3306;dbname=db_readersRealm;charset=utf8','root','root');
-            echo "db connecté";
         } 
         catch (PDOException $e) 
         {
@@ -245,6 +244,21 @@ class Database {
         } catch (PDOException $e) {
             throw new Exception("Erreur lors de la récupération du nombre d'ouvrages proposés par l'utilisateur : " . $e->getMessage());
         }
+    }
+
+    //Méthode pour rechercher dans la barre de recherche
+    public function searchByTitle($userSearch){
+
+        $query = "SELECT * FROM t_book WHERE booTitle LIKE '%$userSearch%' ";
+       
+        // appeler la méthode pour exécuter la requête
+        $req = $this->querySimpleExecute($query);
+ 
+        // appeler la méthode pour avoir le résultat sous forme de tableau
+        $books = $this->formatData($req);
+ 
+        // retourne toutes les sections
+        return $books;
     }
 
 /*

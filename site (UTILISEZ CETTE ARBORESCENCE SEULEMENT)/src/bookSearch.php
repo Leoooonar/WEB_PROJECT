@@ -53,13 +53,59 @@ if (isset($_SESSION['user'])) {
             <div class="searchArea">
                 <h2>Quel livre recherchez-vous ?</h2>
                 <hr class="horizontalLine">
-                <form class="searchBar">
+                <form class="searchBar" method="post">
                     <input type="text" class="search" id="search" name="search" placeholder="Rechercher...">
-                    <button class="searchButton">
+                    <button type="submit" class="searchButton">
                         <img src="../src/resources/img/Search.png" class="searchIcon">
                     </button>
                 </form>
-            </div> 
+            </div>
+            <!-- Section d'affichage des résultats de la recherche -->
+            <div class="search-results">
+            <div class="book-section">
+                <?php
+                if (isset($_POST['search'])) {
+                    require "bookSearchResults.php"; // Ce fichier doit remplir le tableau $books avec les résultats de recherche
+                    if ($result > 0) {
+                        foreach ($results as $book) {
+                            // Assure-toi que le chemin de l'image est correct et existe
+                            $coverImagePath = "./" . $book['booCoverImage']; // Modifie le chemin si nécessaire
+
+                            // Récupère le pseudo de l'utilisateur
+                            $userPseudo = $db->getUsernameByUserId($book['user_fk']);
+
+                            echo "<div class=\"book\">";
+                            echo "<div class=\"book-cover\">";
+                            echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>";
+                            if (file_exists($coverImagePath)) {
+                                echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"Couverture du livre\">";
+                            } else {
+                                echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">";
+                            }
+                            echo "</a>";
+                            echo "</div>";
+                            echo "<div class=\"book-title\">";
+                            echo "<a href='bookDetails.php?book_id=" . htmlspecialchars($book['book_id']) . "'>" . htmlspecialchars($book['booTitle']) . "</a>";
+                            echo "</div>";
+                            echo "<br>";
+                            echo "Auteur : " . htmlspecialchars($book['booWriter']);
+                            echo "<br>";
+                            if ($userPseudo) {
+                                echo "Utilisateur : <a href='userDetails.php?user_id=" . htmlspecialchars($book['user_fk']) . "'>" . htmlspecialchars($userPseudo) . "</a>";
+                            } else {
+                                echo "Utilisateur : Inconnu";
+                            }
+                            echo "<br>";
+                            echo "</div>";
+                        }
+                    } else {
+                        echo "<div>Pas de resultat</div>";
+                    }
+                }
+                ?>
+            </div>
+            </div>
+            </div>
             <div class="categories">
                 <a href="bookCategory.php?cat_id=1"><img src="../src/resources/img/horrorCategory.png" alt="Horreur"></a>
                 <a href="bookCategory.php?cat_id=2"><img src="../src/resources/img/ComedieCategory.png" alt="Comédie"></a>

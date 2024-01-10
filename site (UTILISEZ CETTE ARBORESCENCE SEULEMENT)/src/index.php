@@ -9,17 +9,8 @@ $lastAddedBooks = $db->getLastAddedBooks();
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-    // Affichez les informations de l'utilisateur, par exemple, son nom d'utilisateur
-    echo 'Bienvenue, ' . $user['useUsername'] . '!';
-    var_dump($user);
     // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
 } 
-else {
-    // L'utilisateur n'est pas connecté, affichez un message approprié
-    echo 'Veuillez vous connecter pour accéder à cette page.';
-    // Afficher un lien de connexion ici si nécessaire
-   
-}
 ?>
 
 <!DOCTYPE html>
