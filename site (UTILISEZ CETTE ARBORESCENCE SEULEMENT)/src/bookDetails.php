@@ -47,6 +47,9 @@ if (isset($_SESSION['user'])) {
             ?>
             </ul>
             </nav>
+            <div class="book-info-section">
+                
+            </div>
         </main>
     <footer>
         <img src="../src/resources/img/books.png" alt="books" class="item-1">

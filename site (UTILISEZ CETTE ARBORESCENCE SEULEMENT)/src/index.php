@@ -81,14 +81,17 @@ else {
 
                             foreach($lastAddedBooks as $book)
                             {
-                            // Assure-toi que le chemin de l'image est correct et existe
+                            // Assure que le chemin de l'image est correct et existe
                             $coverImagePath = "./" . $book['booCoverImage']; // Modifie le chemin si nécessaire
-
+                            echo "<a href=\"bookDetails.php?bookId=" . $book['book_id'] . "\">";
                             echo "<div class=\"book\">";
                             echo "<div class=\"book-cover\">";
-                            if (file_exists($coverImagePath)) {
+                            if (file_exists($coverImagePath)) 
+                            {
                                 echo "<img src=\"" . htmlspecialchars($coverImagePath) . "\" alt=\"Couverture du livre\">";
-                            } else {
+                            } 
+                            else 
+                            {
                                 echo "<img src=\"./path/to/default-cover.jpg\" alt=\"Couverture par défaut\">"; // Chemin vers une image de couverture par défaut
                             }
                             echo "</div>";
@@ -97,6 +100,7 @@ else {
                             echo "</div>";
                             // Ajoute d'autres détails du livre ici si nécessaire
                             echo "</div>";
+                            echo "</a>";
                             }
                         ?>
                 </div>

@@ -73,7 +73,7 @@ if (isset($_SESSION['user'])) {
             <?php
             // Afficher les livres
             foreach ($books as $book) {
-                // Assure-toi que le chemin de l'image est correct et existe
+                // Assure que le chemin de l'image est correct et existe
                 $coverImagePath = "./" . $book['booCoverImage']; // Modifie le chemin si nécessaire
 
                 // Récupère le pseudo de l'utilisateur
