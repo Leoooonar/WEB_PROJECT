@@ -19,6 +19,9 @@
 
     // Permet de récupérer les informations détaillées du livre
     $book = $db->getOneBook($idBook);
+
+    // Obtenez le nom de cette catégorie
+    $categoryName = $db->getCategoryName($book['category_fk']);
 ?>
 
 <!DOCTYPE html>
@@ -68,7 +71,8 @@
                     echo "<div class=\"book-cover\">";
 
                     // Ajoute le chemin de l'image de la couverture du livre si elle est donnée, sinon met un placeholder
-                    if (file_exists($book['booCoverImage'])) {
+                    if (file_exists($book['booCoverImage'])) 
+                    {
                         echo "<img src=\"" . htmlspecialchars($book['booCoverImage']) . "\" alt=\"Couverture du livre\">";
                     } 
                     else 
@@ -86,7 +90,13 @@
                     echo "<br>";
                     echo "Nombre de pages : " . htmlspecialchars($book['booNbrPage']);
                     echo "<br>";
-                    echo "Edition " . htmlspecialchars($book['booEditorName']);
+                    echo "Edition : " . htmlspecialchars($book['booEditorName']);
+                    echo "<br>";
+                    echo "Catégorie : " . htmlspecialchars($categoryName);
+                    echo "<br>";
+                    echo "Année d'édition : " . htmlspecialchars($book['booEditionDate']);
+                    echo "<br>";
+                    echo "Moyenne d'appréciation des utilisateurs : " . htmlspecialchars($book['booLikeRatio']);
                     echo "<br>";
                     if ($userPseudo) 
                     {

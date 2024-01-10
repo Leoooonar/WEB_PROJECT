@@ -72,7 +72,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'booEditionDate' => $_POST['releaseDate'], 
             'booCoverImage' => $uploadPath, 
         ];
-
         // Permet d'avertir l'utilisateur si une erreur est survenue
         try {
             $db->addBook($bookData);

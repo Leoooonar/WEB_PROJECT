@@ -315,7 +315,7 @@ class Database {
    public function getOneBook($id)
    {
         // avoir la requête sql pour récupérer 1 livre (utilisation de l'id)
-        $query ="SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditionDate, booLikeRatio, booCoverImage, booWriter, category_fk, user_fk 
+        $query ="SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditorName, booEditionDate, booLikeRatio, booCoverImage, booWriter, category_fk, user_fk 
         FROM t_book JOIN t_category ON category_fk = category_id JOIN t_user ON user_fk = user_id WHERE book_id = $id";
 
         // appeler la méthode pour exécuter la requête
