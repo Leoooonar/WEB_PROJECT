@@ -357,7 +357,7 @@ class Database {
         return $categories;
     }
 
-    // Va afficher
+    // Retourne les 5 derniers livres ajoutés par les utilisateurs
     public function getLastAddedBooks($limit = 5) {
         $query = "SELECT * FROM t_book ORDER BY book_id DESC LIMIT :limit";
         $stmt = $this->connector->prepare($query);

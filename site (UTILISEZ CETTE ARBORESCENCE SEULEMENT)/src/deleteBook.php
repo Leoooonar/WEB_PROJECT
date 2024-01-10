@@ -9,6 +9,7 @@ if (!isset($_SESSION['user'])) {
     die("Vous devez être connecté pour effectuer cette action.");
 }
 
+// Garde l'id de l'utilisateur pour l'utiliser pour tester si le livre appartient au bon user
 $userId = $_SESSION['user']['user_id'];
 
 // Vérifie si l'ID du livre est défini
