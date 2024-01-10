@@ -1,8 +1,14 @@
 <?php
 session_start();
-
 include("./database.php");
 $db = new Database();
+
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+    header('Location: userLogin.php');
+    exit;
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['book_id'])) {
     $bookId = $_POST['book_id'];

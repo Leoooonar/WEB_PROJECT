@@ -5,6 +5,13 @@ include("./database.php");
 $db = new Database();
 var_dump($_SESSION);
 
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+    header('Location: userLogin.php');
+    exit;
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $errors = [];
 
@@ -29,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Mise à jour du nombre de livres proposés par l'utilisateur
         $newCount = $db->incrementUserNbrProposedBooks($_SESSION['user']['user_id']);
 
-        // Mettez à jour la valeur dans la variable $user avec la nouvelle valeur
+        // Mise à jour la valeur dans la variable $user avec la nouvelle valeur
         $_SESSION['user']['useNbrProposedBook'] = $newCount;
 
         echo '<br>';

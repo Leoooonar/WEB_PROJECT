@@ -9,7 +9,6 @@ $lastAddedBooks = $db->getLastAddedBooks();
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-    // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
 } 
 ?>
 

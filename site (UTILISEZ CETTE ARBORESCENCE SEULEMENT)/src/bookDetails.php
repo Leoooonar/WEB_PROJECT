@@ -1,4 +1,5 @@
 <?php
+<<<<<<< Updated upstream
     session_start();
     include("./database.php");
     $db = new Database();
@@ -22,6 +23,13 @@
 
     // Obtenez le nom de cette catégorie
     $categoryName = $db->getCategoryName($book['category_fk']);
+=======
+session_start();
+// Vérifier si l'utilisateur est connecté
+if (isset($_SESSION['user'])) {
+    $user = $_SESSION['user'];
+} 
+>>>>>>> Stashed changes
 ?>
 
 <!DOCTYPE html>

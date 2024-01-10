@@ -22,6 +22,10 @@ if (isset($_GET['book_id'])) {
     if ($book && $book['user_fk'] == $userId) {
         // L'utilisateur actuel a posté ce livre, procède à la suppression
         $db->deleteBook($bookId);
+        $newCount = $db->decrementUserNbrProposedBooks($userId);
+
+        $_SESSION['user']['useNbrProposedBook'] = $newCount;
+
         echo "Le livre a été supprimé avec succès.";
     } else {
         die("Vous n'avez pas l'autorisation de supprimer ce livre.");

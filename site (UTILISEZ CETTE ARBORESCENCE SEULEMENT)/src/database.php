@@ -220,6 +220,24 @@ class Database {
         }
     }
 
+    //Décrémente UseNbrProposedBook  lors de la supression d'un livre
+    public function decrementUserNbrProposedBooks($user_id) {
+        $query = "UPDATE t_user SET UseNbrProposedBook = UseNbrProposedBook - 1 WHERE user_id = :user_id AND UseNbrProposedBook > 0";
+    
+        try {
+            $stmt = $this->connector->prepare($query);
+            $stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+            $stmt->execute();
+    
+            // Récupérez la nouvelle valeur du nombre d'ouvrages proposés après la mise à jour
+            $newCount = $this->getUserNbrProposedBooks($user_id);
+    
+            return $newCount; // Retourne la nouvelle valeur du nombre d'ouvrages proposés
+        } catch (PDOException $e) {
+            throw new Exception("Erreur lors de la diminution du nombre de livres proposés par l'utilisateur : " . $e->getMessage());
+        }
+    }
+    
     //Trouve les livres postés par l'utilisateur
     public function getBooksByUserId($userId) {
         $query = "SELECT * FROM t_book WHERE user_fk = :userId";
@@ -284,6 +302,13 @@ class Database {
         $stmt->execute();
         $result = $stmt->fetch(PDO::FETCH_ASSOC);
         return $result ? $result['useUsername'] : null;
+    }
+
+    //Toutes les infos à partir de userID
+    public function getUserById($user_id) {
+        $stmt = $this->connector->prepare("SELECT * FROM t_user WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        return $stmt->fetch();
     }
 
 /*

@@ -1,10 +1,27 @@
 <?php
 session_start();
-// Vérifier si l'utilisateur est connecté
-if (isset($_SESSION['user'])) {
-    $user = $_SESSION['user'];
-} 
+require 'database.php';
 
+// Vérifier si l'utilisateur est connecté
+if (!isset($_SESSION['user'])) {
+    header('Location: userLogin.php');
+    exit;
+}
+
+// Création d'une instance de la classe Database
+$db = new Database('localhost', 'nom_de_votre_base_de_donnees', 'votre_nom_utilisateur', 'votre_mot_de_passe');
+
+// Récupérer l'identifiant de l'utilisateur depuis l'URL
+$user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+
+// Utiliser la méthode getUserById pour obtenir les informations de l'utilisateur
+$bookUser = $db->getUserById($user_id);
+
+// Vérifier si l'utilisateur existe
+if (!$bookUser) {
+    echo "Utilisateur introuvable.";
+    exit;
+}
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -44,30 +61,12 @@ if (isset($_SESSION['user'])) {
                     ?>
                 </ul>
             </nav>
-            <div class="form-content">
-                <div class="login-png">    
-                    <img src="./resources/img/login.png" alt="">
-                </div>
-                <form action="userLoginCheck.php" method="POST">
-                    <h1 class="form-title">Connexion</h1> 
-                    <div class="label-content">
-                        <label><b>Nom d'utilisateur</b></label>
-                        <br>
-                        <input type="text" placeholder="Entrer le nom d'utilisateur" name="username">
-                    </div>
-                    <br>
-                    <div class="label-content">
-                        <label><b>Mot de passe</b></label>
-                        <br>
-                        <input type="password" placeholder="Entrer le mot de passe" name="password">
-                        <br>
-                    </div>
-                    <div class="label-content">
-                        <input type="submit" id='submit' value='LOGIN' >
-                    </div>
-                </form>
-                <a href="UserRegistration.php"><h4 class="inscription">S'inscrire</h4></a>
-            </div> 
+            <div class="user-info-section">
+                <h2 class="username">Nom de l'utilisateur : <span class="highlight"><?php echo htmlspecialchars($bookUser['useUsername']); ?></span></h2>
+                <br>
+                <p class="user-stats">Nombre d'ouvrages proposés : <span class="highlight"><?php echo htmlspecialchars($bookUser['useNbrProposedBook']); ?></span></p>
+                <br>
+            </div>
         </main>
         <footer>
             <img src="../src/resources/img/books.png" alt="books" class="item-1">

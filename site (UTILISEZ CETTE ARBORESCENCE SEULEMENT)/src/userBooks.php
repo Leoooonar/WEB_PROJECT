@@ -3,18 +3,19 @@ session_start();
 include("./database.php");
 $db = new Database();
 
+
 // Vérifier si l'utilisateur est connecté
-if (isset($_SESSION['user'])) {
+if (!isset($_SESSION['user'])) {
+    // Si l'utilisateur n'est pas connecté, rediriger vers la page de connexion
+    header('Location: userLogin.php');
+    exit;
+}
+
+else {
     $user = $_SESSION['user'];
     $userBooks = $db->getBooksByUserId($user['user_id']);
-    // Affichez les informations de l'utilisateur, par exemple, son nom d'utilisateur
-    echo 'Bienvenue, ' . $user['useUsername'] . '!';
-    // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
-} else {
-    // L'utilisateur n'est pas connecté, affichez un message approprié
-    echo 'Veuillez vous connecter pour accéder à cette page.';
-    // Afficher un lien de connexion ici si nécessaire
-}
+} 
+
 ?>
 <!DOCTYPE html>
 <html lang="fr">

@@ -5,14 +5,7 @@ $db = new Database();
 // Vérifier si l'utilisateur est connecté
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user'];
-    // Affichez les informations de l'utilisateur, par exemple, son nom d'utilisateur
-    echo 'Bienvenue, ' . $user['useUsername'] . '!';
-    // Inclure d'autres fonctionnalités réservées aux utilisateurs connectés
-} else {
-    // L'utilisateur n'est pas connecté, affichez un message approprié
-    echo 'Veuillez vous connecter pour accéder à cette page.';
-    // Afficher un lien de connexion ici si nécessaire
-}
+} 
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -98,7 +91,7 @@ if (isset($_SESSION['user'])) {
                 echo "<br>";
                 // Lien pour voir les détails de l'utilisateur
                 if ($userPseudo) {
-                    echo "Utilisateur : <a href='userDetails.php?user_id=" . htmlspecialchars($book['user_fk']) . "'>" . htmlspecialchars($userPseudo) . "</a>";
+                    echo "Utilisateur : <a href='profileDetails.php?user_id=" . htmlspecialchars($book['user_fk']) . "'>" . htmlspecialchars($userPseudo) . "</a>";
                 } else {
                     echo "Utilisateur : Inconnu";
                 }
