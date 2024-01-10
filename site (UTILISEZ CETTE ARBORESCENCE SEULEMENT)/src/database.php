@@ -18,6 +18,7 @@ class Database {
         try 
         {
             $this->connector = new PDO('mysql:host=localhost:3306;dbname=db_readersRealm;charset=utf8','root','root');
+            echo "db connecté";
         } 
         catch (PDOException $e) 
         {
@@ -289,7 +290,6 @@ class Database {
     // Méthode pour récupérer le nom de la catégory grâce à l'id 
     }
     */
-
     public function getCategoryName($categoryId) {
         $query = "SELECT catCategory FROM t_category WHERE category_id = :categoryId";
         $stmt = $this->connector->prepare($query);
@@ -312,34 +312,22 @@ class Database {
         $req = $this->queryPrepareExecute($query, $binds);
     }
     
-    // Permet de retourner tous les livres de la base de donnée
-    public function getAllBooks() {
+   public function getOneBook($id)
+   {
+        // avoir la requête sql pour récupérer 1 livre (utilisation de l'id)
+        $query ="SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditionDate, booLikeRatio, booCoverImage, booWriter, category_fk, user_fk 
+        FROM t_book JOIN t_category ON category_fk = category_id JOIN t_user ON user_fk = user_id WHERE book_id = $id";
 
-        $query = "SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditorName, booEditionBook, 
-        booLikeRatio, booCoverImage, wriFirstname, wriLastname, catCategory,useUsername, ratRate
-
-        FROM t_book AS B JOIN t_user AS U ON B.user_fk = U.user_id
-        JOIN t_writer AS W ON B.booWriter = W.writer_id09
-        JOIN t_category AS C ON B.category_fk = C.category_id
-        JOIN t_rate AS R ON R.book_fk = B.book_id;
-        ";
-    
-        // Fait la requête en utilisant query
+        // appeler la méthode pour exécuter la requête
         $req = $this->querySimpleExecute($query);
 
-        // Traitement, transformer le résultat en tableau associatif
-        return $this->formatData($req);
-    }
-    // Permet de rechercher un livre précis
-    public function getOneBook($id) {
-        return $this->formatData($this->querySimpleExecute("SELECT book_id, booTitle, booExemplary, booResumeBook, booNbrPage, booEditorName, booEditionBook, 
-        booLikeRatio, booCoverImage, wriFirstname, wriLastname, catCategory,useUsername, ratRate
+        // appeler la méthode pour avoir le résultat sous forme de tableau
+        $oneBook = $this->formatData($req);
 
-        FROM t_book AS B JOIN t_user AS U ON B.user_fk = U.user_id
-        JOIN t_writer AS W ON B.booWriter = W.writer_id09
-        JOIN t_category AS C ON B.category_fk = C.category_id
-        JOIN t_rate AS R ON R.book_fk = B.book_id;"));          
-    }
+        // retourne l'enseignant
+        return $oneBook[0];
+
+   }
 
     //Retourne toutes les catégories
     public function getAllCategories()
