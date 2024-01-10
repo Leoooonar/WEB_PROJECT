@@ -10,6 +10,7 @@ if (isset($_SESSION['user'])) {
     // L'utilisateur n'est pas connecté, affichez un message approprié
     echo 'Veuillez vous connecter pour accéder à cette page.';
     // Afficher un lien de connexion ici si nécessaire
+    
 }
 ?>
 <!DOCTYPE html>
@@ -26,29 +27,34 @@ if (isset($_SESSION['user'])) {
                 <ul>
                     <li class="nav-item-one"><a href="index.php">Accueil</a></li>
                     <li class="nav-item-two"><a href="">Livres</a></li>
-                    <li class="nav-logo"><a href=""><img src="./resources/img/logoRR.png" alt="Readers Realm logo"></a></li>
-                    <li class="nav-item-two"><a href="userDetails.php">Contact</a></li>
+                    <li class="nav-logo"><a href=""><img src="./resources/img/logoRR.png" alt="Readers Realm logo"></a></li>                   
                     <?php
-            if (isset($_SESSION['user'])) {
-                // Utilisateur connecté
-                echo '<li class="nav-item dropdown">';
-                echo '<a href="javascript:void(0)" class="dropbtn">Mon compte</a>';
-                echo '<div class="dropdown-content">';
-                echo '<a href="userDetails.php">Détail du compte</a>';
-                echo '<a href="userBooks.php">Mes livres</a>';
-                echo '<a href="bookAdd.php">Ajouter un livre</a>';
-                echo '<a href="logout.php">Déconnexion</a>';
-                echo '</div>';
-                echo '</li>';
-            } else {
-                // Utilisateur non connecté
-                echo '<li class="nav-item"><a href="userLogin.php">Connexion</a></li>';
-            }
-            ?>
-            </ul>
+                        if (isset($_SESSION['user'])) 
+                        {
+                            // Utilisateur connecté
+                            echo '<li class="nav-item-two"><a href="bookAdd.php">Ajouter</a></li>';
+                            echo '<li class="nav-item dropdown">';
+                            echo '<a href="javascript:void(0)" class="dropbtn">Mon compte</a>';
+                            echo '<div class="dropdown-content">';
+                            echo '<a href="userDetails.php">Détail du compte</a>';
+                            echo '<a href="userBooks.php">Mes livres</a>';
+                            echo '<a href="logout.php">Déconnexion</a>';
+                            echo '</div>';
+                            echo '</li>';
+                        } 
+                        else 
+                        {
+                            // Utilisateur non connecté
+                            echo '<li class="nav-item-two"><a href="userLogin.php">Ajouter</a></li>';
+                            echo '<li class="nav-item"><a href="userLogin.php">Connexion</a></li>';
+                        }
+                    ?>
+                </ul>
             </nav>
             <div class="book-info-section">
-                
+                <?php
+                    
+                ?>
             </div>
         </main>
     <footer>
